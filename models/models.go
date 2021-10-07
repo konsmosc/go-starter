@@ -17,12 +17,11 @@ type Score struct {
 }
 
 type User struct {
-	ID         uint    `json:"id"; gorm:"primary_key"`
-	Username   string  `json:"username"; gorm:"unique"`
-	Password   string  `json:"password"`
-	Scores     []Score `json:"scores"`
-	TotalScore uint    `json:"totalscore"`
-	Admin      bool    `json:"admin"; gorm:"false"`
+	ID       uint    `json:"id"; gorm:"primary_key"`
+	Username string  `json:"username"; gorm:"unique"`
+	Password string  `json:"password"`
+	Scores   []Score `json:"scores"`
+	Admin    bool    `json:"admin"; gorm:"false"`
 }
 
 type Option struct {

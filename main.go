@@ -5,20 +5,20 @@ import (
 	config "github.com/konsmosc/go-starter/utils"
 
 	"github.com/gin-contrib/cors"
-	"github.com/gin-gonic/gin"
+	"github.com/konsmosc/go-starter/models"
+	Routers "github.com/konsmosc/go-starter/routers"
 )
 
 func main() {
-	r := gin.Default()
+	r := Routers.Router()
 	r.Use(cors.Default())
 
 	database.InitDb()
-
-	r.GET("/status", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "up",
-		})
-	})
+	database.Db.AutoMigrate(&models.User{},
+		&models.Score{},
+		&models.Quiz{},
+		&models.Question{},
+		&models.Option{})
 
 	r.Run(config.Port)
 }
