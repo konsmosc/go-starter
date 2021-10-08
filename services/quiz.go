@@ -1,8 +1,6 @@
 package services
 
 import (
-	"fmt"
-
 	"github.com/konsmosc/go-starter/models"
 	"gorm.io/gorm"
 )
@@ -18,7 +16,6 @@ func GetQuestions(db *gorm.DB, Quiz *models.Quiz, id string) (Questions []models
 		var options []models.Option
 		db.Model(&question).Association("Options").Find(&options)
 		questions[i].Options = append(questions[i].Options, options...)
-		fmt.Println(options)
 	}
 
 	return questions, nil
