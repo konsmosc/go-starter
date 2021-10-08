@@ -70,13 +70,13 @@ func SubmitQuiz(c *gin.Context) {
 			score.Username = user.Username
 			database.Db.Create(&score)
 			database.Db.Save(&user)
-			c.JSON(http.StatusOK, score)
+			helpers.Success(c, "submit_quiz", score)
 		} else {
 			database.Db.Save(&user)
 			score_record.Value = score.Value
 			score_record.Attempts = score_record.Attempts + 1
 			database.Db.Save(&score_record)
-			c.JSON(http.StatusOK, score_record)
+			helpers.Success(c, "submit_quiz", score_record)
 		}
 	}
 }
@@ -88,5 +88,5 @@ func GetPerformance(c *gin.Context) {
 	database.Db.Where("id = ?", id).First(&user)
 	database.Db.Model(&user).Association("Scores").Find(&scores)
 	user.Scores = append(user.Scores, scores...)
-	c.JSON(http.StatusOK, user)
+	helpers.Success(c, "get_user_performance", user)
 }

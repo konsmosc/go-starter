@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/konsmosc/go-starter/database"
+	"github.com/konsmosc/go-starter/helpers"
 	"github.com/konsmosc/go-starter/models"
 	"github.com/konsmosc/go-starter/services"
 	"gorm.io/gorm"
@@ -24,5 +25,5 @@ func GetQuestions(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}
-	c.JSON(http.StatusOK, questions)
+	helpers.Success(c, "get_questions", questions)
 }
