@@ -85,8 +85,11 @@ func GetPerformance(c *gin.Context) {
 	var scores []models.Score
 	var user models.User
 	id, _ := c.Params.Get("id")
-	database.Db.Where("id = ?", id).First(&user)
-	database.Db.Model(&user).Association("Scores").Find(&scores)
-	user.Scores = append(user.Scores, scores...)
-	helpers.Success(c, "get_user_performance", user)
+	if err := database.Db.Where("id = ?", id).First(&user).Error; err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+	} else {
+		database.Db.Model(&user).Association("Scores").Find(&scores)
+		user.Scores = append(user.Scores, scores...)
+		helpers.Success(c, "get_user_performance", user)
+	}
 }
